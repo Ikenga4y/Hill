@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discover anime, movies, technology, AI, trending stories and useful digital resources on TrendNova.">
+  <meta name="theme-color" content="#10111b">
+  <title>TrendNova — What's Worth Your Time</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="announcement">Fresh ideas, entertainment and digital discoveries — all in one place.</div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="TrendNova home"><span class="brand-mark">✦</span> Trend<span>Nova</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="nav" id="mainNav">
+      <a href="#latest">Latest</a><a href="#categories">Categories</a><a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">YOUR DAILY DISCOVERY FEED</p>
+        <h1>Find your next <span>rabbit hole.</span></h1>
+        <p class="hero-text">Explore anime, movie guides, AI tools, trending stories and useful digital resources — curated for curious minds.</p>
+        <div class="hero-actions"><a class="button primary" href="#latest">Explore stories <span>↗</span></a><a class="button secondary" href="#categories">Browse categories</a></div>
+        <div class="hero-note"><span class="live-dot"></span> New guides and stories added regularly</div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="floating-card card-top"><span>✦</span><div><b>Curiosity</b><small>Starts here</small></div></div>
+        <div class="hero-symbol">N<span>✦</span></div>
+        <div class="floating-card card-bottom"><span>↗</span><div><b>What's next?</b><small>Keep exploring</small></div></div>
+      </div>
+    </section>
+
+    <div class="ad-slot" aria-label="Advertisement placement">
+      <span class="ad-label">ADVERTISEMENT</span>
+      <p>Ad placement area</p>
+      <small>Insert your approved HilltopAds code here after your site is accepted.</small>
+    </div>
+
+    <section class="section" id="categories">
+      <div class="section-heading"><div><p class="eyebrow">EXPLORE YOUR INTERESTS</p><h2>Pick your next topic</h2></div><p class="section-intro">One home for entertainment, ideas and practical digital guides.</p></div>
+      <div class="category-grid">
+        <button class="category-card" data-filter="Anime & Entertainment"><span class="category-icon purple">✧</span><b>Anime & Entertainment</b><small>Reviews, explainers and fandom</small><span class="arrow">↗</span></button>
+        <button class="category-card" data-filter="Movies & Streaming"><span class="category-icon pink">▶</span><b>Movies & Streaming</b><small>Watch guides and reviews</small><span class="arrow">↗</span></button>
+        <button class="category-card" data-filter="Technology & AI"><span class="category-icon blue">⌘</span><b>Technology & AI</b><small>Tools, apps and tutorials</small><span class="arrow">↗</span></button>
+        <button class="category-card" data-filter="Trending Stories"><span class="category-icon orange">↗</span><b>Trending Stories</b><small>People, ideas and culture</small><span class="arrow">↗</span></button>
+        <button class="category-card" data-filter="Downloads & Resources"><span class="category-icon green">↓</span><b>Downloads & Resources</b><small>Useful and legal resources</small><span class="arrow">↗</span></button>
+      </div>
+    </section>
+
+    <section class="section" id="latest">
+      <div class="section-heading latest-heading"><div><p class="eyebrow">THE DISCOVERY FEED</p><h2>Latest stories</h2></div>
+        <div class="feed-tools"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search stories..." aria-label="Search stories"></label>
+          <select id="categoryFilter" aria-label="Filter by category"><option value="All">All topics</option><option>Anime & Entertainment</option><option>Movies & Streaming</option><option>Technology & AI</option><option>Trending Stories</option><option>Downloads & Resources</option></select>
+        </div>
+      </div>
+      <div class="story-grid" id="storyGrid" aria-live="polite"></div>
+      <p class="empty-state" id="emptyState" hidden>No stories match that search. Try another keyword or category.</p>
+      <div class="load-row"><button class="button secondary" id="showAllBtn">Show all stories</button></div>
+    </section>
+
+    <div class="ad-slot ad-slot-wide" aria-label="Advertisement placement">
+      <span class="ad-label">ADVERTISEMENT</span><p>In-content ad placement</p><small>Only add the ad script supplied in your HilltopAds dashboard.</small>
+    </div>
+
+    <section class="newsletter section">
+      <div><p class="eyebrow">STAY CURIOUS</p><h2>Good finds deserve a second look.</h2><p>Bookmark TrendNova and come back for fresh guides, reviews and discoveries.</p></div>
+      <a class="button primary" href="#latest">Explore the feed <span>↗</span></a>
+    </section>
+
+    <section class="section about-section" id="about">
+      <p class="eyebrow">ABOUT TRENDNOVA</p><h2>Made for curious people.</h2>
+      <p>TrendNova is a multi-topic editorial website concept covering entertainment, technology, culture and practical digital resources. We aim to publish helpful, original content and clearly identify external resources.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="brand" href="#"><span class="brand-mark">✦</span> Trend<span>Nova</span></a>
+    <div class="footer-links"><a href="about.html">About</a><a href="privacy.html">Privacy Policy</a><a href="contact.html">Contact</a></div>
+    <p>© <span id="year"></span> TrendNova. All rights reserved.</p>
+    <small>Editorial content and links should be reviewed before publication. External trademarks belong to their owners.</small>
+  </footer>
+
+  <dialog class="article-dialog" id="articleDialog">
+    <button class="dialog-close" id="dialogClose" aria-label="Close article">×</button>
+    <div id="dialogContent"></div>
+  </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
