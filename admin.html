@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TrendNova Admin</title><link rel="stylesheet" href="style.css">
+<style>
+.admin-wrap{max-width:980px;margin:auto;padding:42px 5% 80px}.admin-panel{background:#1b1e29;border:1px solid #343849;border-radius:18px;padding:22px;margin:18px 0}.admin-panel h2{margin-top:0}.upload-zone{border:2px dashed #596177;border-radius:15px;padding:30px;text-align:center;background:#171a25}.upload-zone input{display:block;margin:16px auto;max-width:100%}.admin-btn{border:0;border-radius:10px;padding:12px 16px;background:#c8ff5e;color:#111522;font-weight:800;cursor:pointer;margin:5px 6px 5px 0}.admin-btn.secondary{background:#303649;color:#f5f5f7;border:1px solid #454b60}.admin-btn:disabled{opacity:.45;cursor:not-allowed}.hint{color:#b7bbca;font-size:13px}.status{padding:12px;border-radius:10px;background:#252a39;margin-top:12px;white-space:pre-wrap;font-size:13px}.preview-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.preview-card{background:#141620;border:1px solid #343849;border-radius:12px;overflow:hidden}.preview-card img{width:100%;aspect-ratio:16/9;object-fit:cover}.preview-card div{padding:12px}.preview-card b{display:block;margin-bottom:5px}.danger{color:#ffb4b4}.admin-top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}.admin-top h1{margin:0}.format{font-family:monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#10121a;padding:13px;border-radius:10px;font-size:12px;color:#d5d9e5}@media(max-width:600px){.admin-panel{padding:16px}}
+</style></head><body>
+<header><a class="brand" href="index.html"><b>T</b> Trend<span>Nova</span> <small style="display:block;font-size:10px;color:#a2a7b8">ADMIN TOOL</small></a><nav><a href="index.html">View website ↗</a></nav></header>
+<main class="admin-wrap">
+<div class="admin-top"><div><small>TRENDNOVA / CONTENT DESK</small><h1>Update your whole website</h1></div><span class="hint">No AI API key required</span></div>
+<p class="hint">Upload one TrendNova content-pack ZIP. This tool reads its articles and pictures, sorts each article into its niche, and builds a fresh website ZIP with the updated homepage, category filters, articles, and images.</p>
+<div class="admin-panel"><h2>1. Upload a content ZIP</h2><div class="upload-zone"><p><b>Choose your TrendNova content pack</b></p><p class="hint">The ZIP must contain <code>manifest.json</code> and an <code>images/</code> folder.</p><input type="file" id="zipFile" accept=".zip,application/zip"><button id="loadBtn" class="admin-btn" disabled>Read ZIP and preview</button></div><div id="status" class="status">Waiting for a ZIP file.</div></div>
+<div class="admin-panel"><h2>2. Preview imported content</h2><p id="summary" class="hint">No content pack loaded yet.</p><div id="preview" class="preview-list"></div></div>
+<div class="admin-panel"><h2>3. Export the updated website</h2><p class="hint">The exported ZIP is a complete replacement site, not just a content fragment. Upload its extracted contents to your hosting repository to make the changes live.</p><button id="buildBtn" class="admin-btn" disabled>Generate updated website ZIP</button><a href="index.html" class="admin-btn secondary" style="display:inline-block">Cancel / return to site</a><p class="hint danger">Important: GitHub Pages is static hosting. This page cannot directly overwrite live hosted files. You must upload the exported ZIP contents to GitHub (or use a server-backed CMS) to publish the update.</p></div>
+<div class="admin-panel"><h2>Content-pack format</h2><p class="hint">If you ask ChatGPT to make a new batch, request a “TrendNova content-pack ZIP” containing manifest.json and image files. Example manifest:</p><div class="format">{
+  "posts": [
+    {
+      "id": "example-story",
+      "title": "Article title",
+      "category": "Technology & AI",
+      "excerpt": "Short summary",
+      "body": ["First paragraph.", "Second paragraph."],
+      "image": "images/example-cover.jpg",
+      "readTime": "4 min read"
+    }
+  ]
+}</div><p class="hint">Supported categories: Anime & Entertainment; Movies & Streaming; Technology & AI; Trending Stories; Downloads & Resources. Images can be JPG, PNG, WebP, or SVG.</p></div>
+</main>
+<footer><div class="brand"><b>T</b> Trend<span>Nova</span></div><small>Admin utility — content stays in your browser while you work.</small></footer>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+const fileInput=document.getElementById('zipFile'),loadBtn=document.getElementById('loadBtn'),buildBtn=document.getElementById('buildBtn'),statusBox=document.getElementById('status'),summary=document.getElementById('summary'),preview=document.getElementById('preview');
+let importedPosts=[], importedImages=new Map(), siteFiles=new Map();
+const categories=['Anime & Entertainment','Movies & Streaming','Technology & AI','Trending Stories','Downloads & Resources'];
+const slug=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,70)||'story';
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const setStatus=t=>statusBox.textContent=t;
+fileInput.addEventListener('change',()=>{loadBtn.disabled=!fileInput.files.length;buildBtn.disabled=true;});
+function bodyArray(body){if(Array.isArray(body))return body.map(x=>String(x));if(typeof body==='string')return body.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);return []}
+loadBtn.addEventListener('click',async()=>{
+ try{
+  setStatus('Reading ZIP…'); preview.innerHTML=''; importedPosts=[];importedImages.clear();
+  const zip=await JSZip.loadAsync(fileInput.files[0]);
+  const mf=zip.file('manifest.json')||zip.file('content/manifest.json');
+  if(!mf)throw new Error('I could not find manifest.json at the ZIP root (or inside content/).');
+  const manifest=JSON.parse(await mf.async('string'));
+  if(!Array.isArray(manifest.posts)||!manifest.posts.length)throw new Error('manifest.json must contain a non-empty "posts" array.');
+  for(const [path,entry] of Object.entries(zip.files)){
+   if(entry.dir||!/(^|\/)images\//i.test(path))continue;
+   const name=path.split('/').pop(); if(!name)continue;
+   const data=await entry.async('base64');const ext=(name.split('.').pop()||'').toLowerCase();
+   const mime=({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',svg:'image/svg+xml',gif:'image/gif'})[ext];
+   if(mime)importedImages.set('assets/images/'+name,{data,mime});
+  }
+  const used=new Set();
+  importedPosts=manifest.posts.map((p,i)=>{
+   if(!p.title)throw new Error('Post '+(i+1)+' is missing a title.');
+   const cat=categories.includes(p.category)?p.category:(categories.includes(p.niche)?p.niche:null);
+   if(!cat)throw new Error('Post "'+p.title+'" has an unsupported category. Use one of the five listed categories.');
+   let originalImage=String(p.image||'').replace(/^\.?\//,'');
+   let filename=originalImage.split('/').pop();
+   let imagePath=importedImages.has('assets/images/'+filename)?'assets/images/'+filename:null;
+   if(!imagePath){
+    const matching=[...importedImages.keys()].find(k=>k.split('/').pop().toLowerCase()===filename.toLowerCase());
+    imagePath=matching||'assets/images/'+catKey(cat)+'.svg';
+   }
+   let id=slug(p.id||p.title);if(used.has(id))id=id+'-'+(i+1);used.add(id);
+   return {id,title:String(p.title),category:cat,categoryKey:catKey(cat),excerpt:String(p.excerpt||''),body:bodyArray(p.body||p.content),image:imagePath,readTime:String(p.readTime||'4 min read'),date:String(p.date||new Date().toISOString().slice(0,10))};
+  });
+  const counts=categories.map(c=>c+': '+importedPosts.filter(p=>p.category===c).length).join('\n');
+  summary.textContent=importedPosts.length+' articles loaded.\n'+counts+'\n'+importedImages.size+' image file(s) found.';
+  preview.innerHTML=importedPosts.map(p=>{const im=importedImages.get(p.image);let src=im?`data:${im.mime};base64,${im.data}`:('../'+p.image);return `<div class="preview-card"><img src="${src}" alt=""><div><b>${esc(p.title)}</b><small>${esc(p.category)}</small><p class="hint">${esc(p.excerpt)}</p></div></div>`}).join('');
+  setStatus('ZIP read successfully. Check the article categories and cover pictures below.');buildBtn.disabled=false;
+ }catch(e){setStatus('Could not import this ZIP: '+e.message);summary.textContent='Please fix the ZIP structure and try again.';buildBtn.disabled=true;}
+});
+function catKey(c){return ({'Anime & Entertainment':'anime','Movies & Streaming':'movies','Technology & AI':'tech','Trending Stories':'trending','Downloads & Resources':'resources'})[c]}
+buildBtn.addEventListener('click',async()=>{
+ try{
+  buildBtn.disabled=true;setStatus('Building complete website ZIP…');
+  const out=new JSZip();
+  for(const [path,entry] of Object.entries(siteFiles)){out.file(path,entry);}
+  // Fetch current deployed starter site files and replace article database + uploaded assets.
+  const required=['index.html','style.css','script.js','article.html','about.html','privacy.html','contact.html'];
+  for(const path of required){
+   if(!siteFiles.has(path)){
+    const r=await fetch(path);if(!r.ok)throw new Error('Could not load website file '+path+'. Open this admin page from the hosted TrendNova website, not directly as a local file.');
+    out.file(path,await r.text());
+   }
+  }
+  out.file('content/posts.json',JSON.stringify(importedPosts,null,2));
+  for(const [path,img] of importedImages){out.file(path,img.data,{base64:true});}
+  // Keep the five starter covers as fallback for any niche without an uploaded image.
+  for(const key of ['anime','movies','tech','trending','resources']){
+   const path='assets/images/'+key+'.svg';
+   if(!importedImages.has(path)){
+    const r=await fetch(path);if(r.ok)out.file(path,await r.text());
+   }
+  }
+  out.file('admin.html',await (await fetch('admin.html')).text());
+  out.file('README.md','# TrendNova updated website\n\nUpload the contents of this ZIP to the root of your GitHub Pages repository to publish these imported articles and images.\n\nThe admin tool requires an internet connection for JSZip and must be opened through the hosted site. It builds a replacement ZIP in your browser; it cannot directly write to GitHub Pages.\n');
+  const blob=await out.generateAsync({type:'blob'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='TrendNova_updated_website.zip';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
+  setStatus('Done! TrendNova_updated_website.zip was generated. Extract it and upload its contents to your GitHub repository to publish the changes.');
+ }catch(e){setStatus('Build failed: '+e.message);}finally{buildBtn.disabled=false;}
+});
+</script></body></html>
