@@ -1,0 +1,112 @@
+[
+  {
+    "id": "story-1",
+    "category": "Anime & Entertainment",
+    "categoryKey": "anime",
+    "title": "What Makes a Fantasy Anime World Feel Real?",
+    "excerpt": "Great fictional worlds have rules, history, and everyday details that make them feel alive.",
+    "body": "A memorable setting needs more than spectacular scenery. Consistent rules give characters meaningful limits, while local food, architecture, slang, and festivals hint at how people live. The setting should also affect the plot: a mountain pass, crowded market, or isolated island can change what characters can do. When a world feels inhabited beyond the main story, viewers can imagine what happens off-screen.",
+    "image": "assets/images/anime.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-2",
+    "category": "Anime & Entertainment",
+    "categoryKey": "anime",
+    "title": "How to Build an Anime Watchlist You’ll Actually Finish",
+    "excerpt": "Keep your watchlist small, sort by mood, and give yourself permission to move on.",
+    "body": "Create three lists: watch next, save for later, and currently watching. Keep the first list short so choosing a show stays easy. Sort by mood—comedy, drama, action—rather than rankings alone. Try a personal three-episode rule, while remembering that some slower stories need more time. If a series is not working for you after a fair try, move on without guilt. Check legitimate streaming services available in your region.",
+    "image": "assets/images/anime.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-3",
+    "category": "Movies & Streaming",
+    "categoryKey": "movies",
+    "title": "A Practical Checklist Before Subscribing to Streaming",
+    "excerpt": "Check the catalogue, device support, plan limits, and cancellation rules before paying.",
+    "body": "Search for the exact films or series you want because catalogues vary by country and change over time. Confirm your devices are supported and compare video quality, simultaneous streams, downloads, and advertisements. Check whether a price is introductory and how cancellation works. Rotating subscriptions can be cheaper than paying for several services all year. Subscribe through the provider’s official website or app.",
+    "image": "assets/images/movies.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-4",
+    "category": "Movies & Streaming",
+    "categoryKey": "movies",
+    "title": "How to Plan a Great Movie Night at Home",
+    "excerpt": "A few low-cost choices can turn an ordinary evening into a relaxed cinema-style experience.",
+    "body": "Choose the film before everyone gathers and offer two or three options for a group vote. Lower harsh lights, close curtains, silence notifications, and arrange comfortable seating. Set a snack budget and make a few favourites at home. Check that the film is available from a legitimate service before inviting people over. The best movie night is one where everyone can relax and enjoy the story.",
+    "image": "assets/images/movies.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-5",
+    "category": "Technology & AI",
+    "categoryKey": "tech",
+    "title": "Five Everyday Tasks AI Tools Can Help You Organize",
+    "excerpt": "Use AI for planning, summarizing, and brainstorming—but keep your judgment in the loop.",
+    "body": "AI can help break a project into a checklist, summarize notes into action items, brainstorm alternatives, draft routine messages, and explain unfamiliar concepts. Treat its output as a first draft, not unquestionable truth. Compare important summaries with the original document and verify consequential claims with reliable sources. Avoid entering passwords, financial details, confidential work, or other sensitive data into tools unless you understand their data controls.",
+    "image": "assets/images/tech.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-6",
+    "category": "Technology & AI",
+    "categoryKey": "tech",
+    "title": "Seven Simple Habits That Make Your Phone Safer",
+    "excerpt": "Routine updates and careful account habits reduce common device risks.",
+    "body": "Keep your operating system and apps updated, use a strong screen lock, and choose unique passwords. Enable multi-factor authentication where possible. Treat urgent messages, prize claims, and requests for verification codes carefully; open official apps yourself rather than following suspicious links. Review app permissions, back up important files, and configure device-finding features before a phone is lost. No single habit prevents every attack, but layers of protection help.",
+    "image": "assets/images/tech.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-7",
+    "category": "Trending Stories",
+    "categoryKey": "trending",
+    "title": "How to Check Whether a Viral Story Is Trustworthy",
+    "excerpt": "Trace the original source and look for independent confirmation before sharing a surprising post.",
+    "body": "Find the original source: a named publication, official statement, study, or full interview. Check dates and locations because old footage can be reposted as new. Search distinctive phrases and compare independent, reputable outlets. A large number of shares does not prove a claim is true. Separate confirmed facts from interpretation, and wait for stronger confirmation before sharing claims that could affect safety, reputation, or finances.",
+    "image": "assets/images/trending.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-8",
+    "category": "Trending Stories",
+    "categoryKey": "trending",
+    "title": "Why Digital Trends Can Change So Quickly",
+    "excerpt": "Algorithms, communities, and timing all help decide which topics dominate a feed.",
+    "body": "Recommendation systems use signals such as viewing time and interaction to decide what to show. When engagement grows, more people may see a topic, creating a feedback loop. Communities and creators can also push niche subjects into wider conversations. Yet visibility is not the same as accuracy, broad agreement, or lasting importance. Ask who started a trend, what evidence supports its claims, and whether independent sources are covering it.",
+    "image": "assets/images/trending.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-9",
+    "category": "Downloads & Resources",
+    "categoryKey": "resources",
+    "title": "A Starter Toolkit for Creating Better Digital Content",
+    "excerpt": "Build a simple workflow for writing, graphics, file management, and publishing.",
+    "body": "A small toolkit you understand is usually better than dozens of apps you rarely use. Draft in a notes app or document editor and track topic, audience, status, and publication date in a simple sheet. Use a graphics editor with reusable templates. Organize files into drafts, images, approved, and published folders, and keep backups. Before downloading a tool, check the official source, supported devices, pricing, and privacy policy.",
+    "image": "assets/images/resources.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  },
+  {
+    "id": "story-10",
+    "category": "Downloads & Resources",
+    "categoryKey": "resources",
+    "title": "How to Download Files More Safely",
+    "excerpt": "Use official sources, inspect file types, and slow down when a download page tries to rush you.",
+    "body": "Start at a developer’s official website or a trusted app store. Check domain spelling and avoid pop-ups that imitate download pages. Pay attention to file extensions and permission requests; a document should not need an unrelated installer. Keep your system updated and scan files when appropriate, but remember scanning is not a guarantee. Avoid cracked software and installers that ask you to disable security protections.",
+    "image": "assets/images/resources.svg",
+    "readTime": "3–4 min read",
+    "date": "Starter article"
+  }
+]
