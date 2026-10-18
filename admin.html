@@ -117,7 +117,9 @@
       $('draftsList').innerHTML = drafts.map(p => {
         const body = String(p.content || '');
         const previewText = body.length > 450 ? body.slice(0,450) + '…' : body;
-        const image = p.image_url ? '<img src="' + esc(p.image_url) + '" alt="Cover for ' + esc(p.title) + '" loading="lazy" onerror="this.style.display=\'none\'">' : '';
+        const image = p.image_url
+  ? '<div style="margin:10px 0;padding:10px;border:1px solid #ddd;border-radius:10px;overflow-wrap:anywhere"><img src="' + esc(p.image_url) + '" alt="Cover image" loading="lazy" style="display:block;width:100%;max-width:320px;height:auto;border-radius:8px" onload="this.nextElementSibling.textContent=\'Image loaded successfully\'" onerror="this.nextElementSibling.textContent=\'Image failed to load\'"><small style="display:block;margin-top:6px">Checking image...</small><small style="display:block;overflow-wrap:anywhere">' + esc(p.image_url) + '</small></div>'
+  : '<p class="muted">No cover image URL saved for this draft.</p>';
         const created = p.created_at ? new Date(p.created_at).toLocaleString() : 'Date unavailable';
         return '<article class="preview-card">' + image + '<div><b>' + esc(p.title) + '</b>' +
           '<small>' + esc(p.category) + ' · ' + esc(p.status) + '</small>' +
@@ -325,7 +327,7 @@
         let imageUrl = null;
         const img = imageFiles.get(post.imageName);
         if (img) {
-          const ext = post.imageName.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g,'') || 'jpg';
+    const ext = post.imageName.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g,'') || 'jpg';
           const storagePath = slugify(post.slug) + '-' + Date.now() + '.' + ext;
           const { error: uploadError } = await supabase.storage.from('article-images').upload(storagePath, img.blob, { contentType: img.mime, upsert: false });
           if (uploadError) throw new Error('Image upload failed for "' + post.title + '": ' + uploadError.message);
