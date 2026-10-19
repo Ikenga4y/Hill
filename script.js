@@ -4,7 +4,7 @@ const search = document.getElementById('search');
 const filters = document.getElementById('filters');
 
 const SUPABASE_URL = 'https://urypsodamgpsutdpsdqz.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_MaNeb6j9p2l0vSfZaqLEcQ_2a-5EHO';
+const SUPABASE_KEY = 'sb_publishable_MaNeb6j9p2l0vSfZaqLEcQ_2a-5EHHO';
 
 let data = [];
 let filter = 'all';
