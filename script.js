@@ -18,12 +18,20 @@ const esc = s =>
     "'": '&#39;'
   }[c]));
 
-const categoryKey = category =>
-  String(category || '')
-    .toLowerCase()
-    .trim()
+const categoryKey = category => {
+  const value = String(category || '').toLowerCase().trim();
+  const normalized = value
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
+
+  if (/anime|entertainment/.test(value)) return 'anime';
+  if (/movie|film|streaming|watch/.test(value)) return 'movies';
+  if (/technology|\btech\b|\bai\b|artificial intelligence/.test(value)) return 'tech';
+  if (/trending|viral|right now/.test(value)) return 'trending';
+  if (/resource|download|toolkit/.test(value)) return 'resources';
+
+  return normalized;
+};
 
 function render() {
   const q = search.value.toLowerCase().trim();
@@ -99,13 +107,6 @@ document.getElementById('year').textContent =
 
 async function loadPosts() {
   try {
-    if (
-      SUPABASE_URL.includes('PASTE_YOUR') ||
-      SUPABASE_KEY.includes('PASTE_YOUR')
-    ) {
-      throw new Error('Add your Supabase URL and public key in script.js.');
-    }
-
     const columns = [
       'id', 'title', 'slug', 'excerpt', 'content',
       'image_url', 'category', 'author', 'status',
